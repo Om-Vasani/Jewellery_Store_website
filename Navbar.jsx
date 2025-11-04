@@ -1,27 +1,38 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./styles.css";
 
-const Navbar = () => {
+export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">💎 Amidip Jewellers</div>
-      <div className="menu-icon" onClick={() => setOpen(!open)}>
-        ☰
-      </div>
+    <header className="nav-wrap">
+      <div className="nav-inner">
+        <div className="nav-brand">
+          <div className="brand-left">
+            <span className="diamond">💎</span>
+            <div>
+              <Link to="/" className="brand-title">Amidip Jewellers</Link>
+              <div className="brand-sub">Varachha Road, Surat</div>
+            </div>
+          </div>
+        </div>
 
-      <div className={`nav-links ${open ? "active" : ""}`}>
-        <Link to="/">Home</Link>
-        <Link to="/catalog">Catalog</Link>
-        <Link to="/about">About</Link>
-        <Link to="/contact">Contact</Link>
-        <Link to="/admin">Admin</Link>
-        <Link to="/chat">Chat</Link>
+        <nav className={`nav-links ${open ? "open" : ""}`}>
+          <Link to="/" onClick={() => setOpen(false)}>Home</Link>
+          <Link to="/catalog" onClick={() => setOpen(false)}>Catalog</Link>
+          <Link to="/about" onClick={() => setOpen(false)}>About</Link>
+          <Link to="/contact" onClick={() => setOpen(false)}>Contact</Link>
+          <Link to="/admin" onClick={() => setOpen(false)}>Admin</Link>
+        </nav>
+
+        <button
+          className="nav-toggle"
+          aria-label="Toggle menu"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? "✕" : "☰"}
+        </button>
       </div>
-    </nav>
+    </header>
   );
-};
-
-export default Navbar;
+          }
