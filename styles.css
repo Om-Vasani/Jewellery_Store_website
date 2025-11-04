@@ -1,0 +1,13 @@
+:root{--gold:#d4af37;--muted:#6b6b6b;--bg:#fbf9f6}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#fff,var(--bg));color:#111}
+.container{max-width:1200px;margin:0 auto;padding:0 18px}
+.topbar{position:sticky;top:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,0.04);z-index:50}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.logo-mark{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#f4e4a6);display:flex;align-items:center;justify-content:center}
+.nav-links{display:flex;gap:8px}
+.nav-links a{padding:8px 14px;border-radius:999px;text-decoration:none;color:#111;font-weight:600}
+.section{padding:40px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:white;padding:14px;border-radius:12px;box-shadow:0 8px 30px rgba(16,16,16,0.06)}
+.chat-toggle{position:fixed;right:18px;bottom:18px;background:var(--gold);border-radius:999px;width:58px;height:58px;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:90}
+.chat-widget{position:fixed;right:18px;bottom:88px;width:360px;height:480px;background:white;border-radius:12px;box-shadow:0 20px 60px rgba(16,16,16,0.18);display:none;flex-direction:column;overflow:hidden;z-index:91}
+.chat-widget.open{display:flex}
+@media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:640px){.grid{grid-template-columns:1fr}}
