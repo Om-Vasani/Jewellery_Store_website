@@ -1,50 +1,55 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
 import { GiDiamondRing } from "react-icons/gi";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-gradient-to-r from-[#f9e4b7] to-[#f8d17a] shadow-md z-50">
-      <div className="max-w-6xl mx-auto flex justify-between items-center px-4 py-3">
-        <Link to="/" className="flex items-center gap-2 text-lg font-semibold text-black">
-          <GiDiamondRing className="text-blue-500 text-2xl" />
+    <nav className="navbar">
+      <div className="navbar-inner">
+        <Link to="/" className="brand">
+          <GiDiamondRing style={{ color: "#1e90ff", fontSize: "22px" }} />
           <div>
             Amidip Jewellers
-            <p className="text-xs text-gray-700 -mt-1">Varachha Road, Surat</p>
+            <span className="subtitle">Varachha Road, Surat</span>
           </div>
         </Link>
 
-        {/* Hamburger Menu */}
-        <button
-          className="md:hidden text-black text-2xl"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <FaTimes /> : <FaBars />}
+        {/* Menu Button for Mobile */}
+        <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-6 text-black font-medium">
-          <li><Link to="/" className="hover:text-yellow-700">Home</Link></li>
-          <li><Link to="/catalog" className="hover:text-yellow-700">Catalog</Link></li>
-          <li><Link to="/about" className="hover:text-yellow-700">About</Link></li>
-          <li><Link to="/contact" className="hover:text-yellow-700">Contact</Link></li>
-          <li><Link to="/admin" className="hover:text-yellow-700">Admin</Link></li>
-        </ul>
+        <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to="/catalog" onClick={() => setMenuOpen(false)}>Catalog</Link>
+          <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+          <Link to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link>
+        </div>
       </div>
 
-      {/* Mobile Menu */}
-      {open && (
-        <ul className="md:hidden flex flex-col bg-[#fffaf5] shadow-lg p-4 space-y-3 text-center text-black font-medium">
-          <li><Link to="/" onClick={() => setOpen(false)}>Home</Link></li>
-          <li><Link to="/catalog" onClick={() => setOpen(false)}>Catalog</Link></li>
-          <li><Link to="/about" onClick={() => setOpen(false)}>About</Link></li>
-          <li><Link to="/contact" onClick={() => setOpen(false)}>Contact</Link></li>
-          <li><Link to="/admin" onClick={() => setOpen(false)}>Admin</Link></li>
-        </ul>
+      {/* Mobile Dropdown */}
+      {menuOpen && (
+        <div
+          className="mobile-menu"
+          style={{
+            background: "#fffaf5",
+            padding: "10px 20px",
+            textAlign: "center",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
+          }}
+        >
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link><br />
+          <Link to="/catalog" onClick={() => setMenuOpen(false)}>Catalog</Link><br />
+          <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link><br />
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link><br />
+          <Link to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link>
+        </div>
       )}
     </nav>
   );
-}
+                                                       }
