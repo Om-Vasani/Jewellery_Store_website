@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { saveMessage } from '../firebase'
+import { saveMessage } from './firebase'
 
 export default function Contact(){
   const [status,setStatus] = useState('')
