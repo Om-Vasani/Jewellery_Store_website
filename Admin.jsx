@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { addProduct } from '../firebase'
+import { addProduct } from './firebase'
 
 export default function Admin(){
   const [status,setStatus] = useState('')
