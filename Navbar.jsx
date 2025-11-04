@@ -1,70 +1,44 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { FiMenu, FiX, FiMessageCircle } from "react-icons/fi";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+export default function Navbar(){
+  const [open,setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
-      <div className="flex justify-between items-center px-6 py-3">
-        {/* Logo */}
-        <Link to="/" className="text-lg font-semibold flex items-center gap-1">
-          💎 <span className="text-gray-800">Amidip Jewellers</span>
-        </Link>
-
-        {/* Menu icon for mobile */}
-        <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+    <header className="navbar">
+      <div className="navbar-inner">
+        <div style={{display:'flex',alignItems:'center',gap:12}}>
+          <button className="nav-toggle" aria-label="menu" onClick={()=>setOpen(!open)}>
+            ☰
+          </button>
+          <div className="brand">
+            <span style={{fontSize:20}}>💎</span>
+            <div>
+              <Link to="/" style={{textDecoration:'none',color:'#111'}}>Amidip Jewellers</Link>
+              <span className="subtitle">Varachha Road, Surat</span>
+            </div>
+          </div>
         </div>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex gap-6 text-gray-700 font-medium">
+        <nav className="nav-links" aria-hidden={!open ? true : false}>
           <Link to="/">Home</Link>
           <Link to="/catalog">Catalog</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
           <Link to="/admin">Admin</Link>
-        </div>
-
-        {/* Chat Icon */}
-        <Link
-          to="/chat"
-          className="hidden md:block bg-amber-100 p-2 rounded-full hover:bg-amber-200 transition"
-        >
-          <FiMessageCircle size={20} />
-        </Link>
+        </nav>
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden flex flex-col bg-white shadow-inner">
-          <Link onClick={() => setMenuOpen(false)} className="p-3 border-b" to="/">
-            Home
-          </Link>
-          <Link onClick={() => setMenuOpen(false)} className="p-3 border-b" to="/catalog">
-            Catalog
-          </Link>
-          <Link onClick={() => setMenuOpen(false)} className="p-3 border-b" to="/about">
-            About
-          </Link>
-          <Link onClick={() => setMenuOpen(false)} className="p-3 border-b" to="/contact">
-            Contact
-          </Link>
-          <Link onClick={() => setMenuOpen(false)} className="p-3 border-b" to="/admin">
-            Admin
-          </Link>
-          <Link
-            onClick={() => setMenuOpen(false)}
-            className="p-3 flex items-center gap-2"
-            to="/chat"
-          >
-            <FiMessageCircle /> Chat
-          </Link>
+      {/* mobile menu */}
+      {open && (
+        <div style={{background:'rgba(255,255,255,0.95)', padding:'10px 16px'}}>
+          <Link to="/" onClick={()=>setOpen(false)} style={{display:'block',padding:'8px 0'}}>Home</Link>
+          <Link to="/catalog" onClick={()=>setOpen(false)} style={{display:'block',padding:'8px 0'}}>Catalog</Link>
+          <Link to="/about" onClick={()=>setOpen(false)} style={{display:'block',padding:'8px 0'}}>About</Link>
+          <Link to="/contact" onClick={()=>setOpen(false)} style={{display:'block',padding:'8px 0'}}>Contact</Link>
+          <Link to="/admin" onClick={()=>setOpen(false)} style={{display:'block',padding:'8px 0'}}>Admin</Link>
         </div>
       )}
-    </nav>
-  );
-};
-
-export default Navbar;
+    </header>
+  )
+          }
