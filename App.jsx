@@ -22,10 +22,6 @@ export default function App(){
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      <div style={{fontFamily: 'sans-serif', padding: 20}}>
-      <h1>Jewellery Store Demo App</h1>
-      <p>If you see this page, build entry is correct.</p>
-    </div>
       <Footer />
     </div>
   )
