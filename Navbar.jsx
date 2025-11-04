@@ -1,40 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import "./styles.css";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-white fixed w-full top-0 left-0 shadow-md z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link
-            to="/"
-            className="text-xl sm:text-2xl font-bold text-gray-800 tracking-tight"
-          >
-            Amidip Jewellers
-          </Link>
+    <nav className="navbar">
+      <div className="navbar-logo">💎 Amidip Jewellers</div>
+      <div className="menu-icon" onClick={() => setOpen(!open)}>
+        ☰
+      </div>
+      <div className={`nav-links ${open ? "active" : ""}`}>
+        <a href="#home">Home</a>
+        <a href="#catalog">Catalog</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#admin">Admin</a>
+      </div>
+    </nav>
+  );
+};
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6 lg:space-x-8">
-            <Link
-              to="/"
-              className="text-gray-700 hover:text-yellow-600 font-medium transition"
-            >
-              Home
-            </Link>
-            <Link
-              to="/shop"
-              className="text-gray-700 hover:text-yellow-600 font-medium transition"
-            >
-              Shop
-            </Link>
-            <Link
-              to="/about"
-              className="text-gray-700 hover:text-yellow-600 font-medium transition"
-            >
-              About
+export default Navbar;              About
             </Link>
             <Link
               to="/contact"
