@@ -1,86 +1,106 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { MessageCircle } from "lucide-react";
 
-export default function Navbar({ onChatToggle }) {
-  const [open, setOpen] = useState(false);
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md shadow-md z-50">
-      <div className="container mx-auto flex items-center justify-between px-5 py-3">
-        {/* ===== Left Side Brand + Menu Icon ===== */}
-        <div className="flex items-center gap-3">
-          {/* Animated Menu Icon */}
+    <>
+      <header className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+        <div className="container mx-auto px-4 flex justify-between items-center h-16">
+          {/* Left: Animated Menu Icon */}
           <button
-            className="text-2xl md:hidden transition-transform duration-300 hover:scale-110"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle Menu"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-2xl md:hidden"
           >
-            {open ? "✕" : "☰"}
+            {menuOpen ? "✕" : "☰"}
           </button>
 
           {/* Brand */}
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-3xl animate-pulse">💎</span>
-            <div>
-              <h1 className="font-semibold text-lg text-gray-800 leading-tight">
-                Amidip Jewellers
-              </h1>
-              <p className="text-xs text-gray-500">Varachha Road, Surat</p>
-            </div>
-          </Link>
-        </div>
-
-        {/* ===== Navigation Links ===== */}
-        <nav
-          className={`flex flex-col md:flex-row md:items-center md:gap-8 absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none transition-all duration-300 ease-in-out ${
-            open ? "opacity-100 visible" : "opacity-0 invisible md:visible md:opacity-100"
-          }`}
-        >
           <Link
             to="/"
-            onClick={() => setOpen(false)}
-            className="py-2 px-5 text-gray-700 hover:text-yellow-600 font-medium"
+            className="text-xl font-bold text-gray-800 tracking-tight flex items-center gap-1"
           >
-            Home
+            💎 Amidip Jewellers
           </Link>
-          <Link
-            to="/catalog"
-            onClick={() => setOpen(false)}
-            className="py-2 px-5 text-gray-700 hover:text-yellow-600 font-medium"
-          >
-            Catalog
-          </Link>
-          <Link
-            to="/about"
-            onClick={() => setOpen(false)}
-            className="py-2 px-5 text-gray-700 hover:text-yellow-600 font-medium"
-          >
-            About
-          </Link>
-          <Link
-            to="/contact"
-            onClick={() => setOpen(false)}
-            className="py-2 px-5 text-gray-700 hover:text-yellow-600 font-medium"
-          >
-            Contact
-          </Link>
-          <Link
-            to="/admin"
-            onClick={() => setOpen(false)}
-            className="py-2 px-5 text-gray-700 hover:text-yellow-600 font-medium"
-          >
-            Admin
-          </Link>
-        </nav>
 
-        {/* ===== Chat Icon ===== */}
-        <button
-          onClick={onChatToggle}
-          className="hidden md:flex items-center gap-2 bg-yellow-500 text-white px-3 py-1 rounded-full hover:bg-yellow-600 transition"
-        >
-          💬 Chat
-        </button>
-      </div>
-    </header>
+          {/* Desktop Menu */}
+          <nav className="hidden md:flex gap-8 text-gray-700 font-medium">
+            <Link to="/" className="hover:text-yellow-600">Home</Link>
+            <Link to="/catalog" className="hover:text-yellow-600">Catalog</Link>
+            <Link to="/about" className="hover:text-yellow-600">About</Link>
+            <Link to="/contact" className="hover:text-yellow-600">Contact</Link>
+            <Link to="/admin" className="hover:text-yellow-600">Admin</Link>
+          </nav>
+
+          {/* Chat Icon */}
+          <button
+            onClick={() => setChatOpen(!chatOpen)}
+            className="text-gray-700 hover:text-yellow-600 transition"
+          >
+            <MessageCircle size={26} />
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <nav className="md:hidden bg-white border-t border-gray-200 shadow-md">
+            <Link
+              to="/"
+              className="block px-4 py-3 hover:bg-gray-100"
+              onClick={() => setMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              to="/catalog"
+              className="block px-4 py-3 hover:bg-gray-100"
+              onClick={() => setMenuOpen(false)}
+            >
+              Catalog
+            </Link>
+            <Link
+              to="/about"
+              className="block px-4 py-3 hover:bg-gray-100"
+              onClick={() => setMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className="block px-4 py-3 hover:bg-gray-100"
+              onClick={() => setMenuOpen(false)}
+            >
+              Contact
+            </Link>
+            <Link
+              to="/admin"
+              className="block px-4 py-3 hover:bg-gray-100"
+              onClick={() => setMenuOpen(false)}
+            >
+              Admin
+            </Link>
+          </nav>
+        )}
+      </header>
+
+      {/* Chat Window */}
+      {chatOpen && (
+        <div className="fixed bottom-4 right-4 z-50 animate-bounce">
+          <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-4 w-72">
+            <p className="font-semibold mb-2 text-gray-800">💬 Live Chat</p>
+            <textarea
+              className="w-full border rounded-md p-2 text-sm focus:outline-none"
+              placeholder="Type your message..."
+            ></textarea>
+            <button className="mt-2 bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-md w-full">
+              Send
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
-        }
+            }
