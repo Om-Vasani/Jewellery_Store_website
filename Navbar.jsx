@@ -1,62 +1,55 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { GiDiamondRing } from "react-icons/gi";
-import { X, Menu } from "lucide-react";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-gradient-to-r from-[#fbe9d7] to-[#fff3e6] shadow-md z-50">
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 font-semibold text-lg text-[#3a2a1a]">
-          <GiDiamondRing className="text-2xl text-[#c79a4b]" />
-          Amidip Jewellers
+    <nav className="navbar">
+      <div className="navbar-inner">
+        <Link to="/" className="brand">
+          <GiDiamondRing style={{ color: "#1e90ff", fontSize: "22px" }} />
+          <div>
+            Amidip Jewellers
+            <span className="subtitle">Varachha Road, Surat</span>
+          </div>
         </Link>
 
-        {/* Mobile Toggle */}
-        <button
-          className="md:hidden text-[#3a2a1a]"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <X size={26} /> : <Menu size={26} />}
+        {/* Menu Button for Mobile */}
+        <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-6">
-          <NavLink to="/" label="Home" />
-          <NavLink to="/catalog" label="Catalog" />
-          <NavLink to="/about" label="About" />
-          <NavLink to="/contact" label="Contact" />
-          <NavLink to="/admin" label="Admin" />
+        <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to="/catalog" onClick={() => setMenuOpen(false)}>Catalog</Link>
+          <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+          <Link to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {open && (
-        <div className="md:hidden bg-[#fff9f3] shadow-inner px-6 pb-4">
-          <div className="flex flex-col gap-3 text-[#3a2a1a] font-medium">
-            <NavLink to="/" label="Home" onClick={() => setOpen(false)} />
-            <NavLink to="/catalog" label="Catalog" onClick={() => setOpen(false)} />
-            <NavLink to="/about" label="About" onClick={() => setOpen(false)} />
-            <NavLink to="/contact" label="Contact" onClick={() => setOpen(false)} />
-            <NavLink to="/admin" label="Admin" onClick={() => setOpen(false)} />
-          </div>
+      {/* Mobile Dropdown */}
+      {menuOpen && (
+        <div
+          className="mobile-menu"
+          style={{
+            background: "#fffaf5",
+            padding: "10px 20px",
+            textAlign: "center",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
+          }}
+        >
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link><br />
+          <Link to="/catalog" onClick={() => setMenuOpen(false)}>Catalog</Link><br />
+          <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link><br />
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link><br />
+          <Link to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link>
         </div>
       )}
     </nav>
   );
-}
-
-function NavLink({ to, label, onClick }) {
-  return (
-    <Link
-      to={to}
-      onClick={onClick}
-      className="hover:text-[#c79a4b] transition-colors duration-200"
-    >
-      {label}
-    </Link>
-  );
-            }
+      }
