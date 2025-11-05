@@ -1,58 +1,69 @@
 import React, { useState } from "react";
-import { addProduct } from "./firebase";
 
 export default function Admin() {
-  const [status, setStatus] = useState("");
+  const [form, setForm] = useState({ name: "", price: "", desc: "", image: "" });
+  const [list, setList] = useState([]);
 
-  async function handleAdd(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const fd = new FormData(e.target);
-    const product = {
-      name: fd.get("name"),
-      price: fd.get("price"),
-      desc: fd.get("desc"),
-      category: fd.get("category"),
-      icon: "💍",
-    };
-
-    setStatus("Adding...");
-    try {
-      await addProduct(product);
-      setStatus("✅ Product added successfully!");
-      e.target.reset();
-    } catch (err) {
-      setStatus("❌ Failed to add product");
-    }
-    setTimeout(() => setStatus(""), 2500);
-  }
+    if (!form.name || !form.price) return alert("Please fill all required fields");
+    setList([...list, form]);
+    setForm({ name: "", price: "", desc: "", image: "" });
+  };
 
   return (
-    <section className="py-20 container mx-auto px-6">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">Admin Panel</h2>
-      <form
-        onSubmit={handleAdd}
-        className="grid gap-4 max-w-2xl"
-        style={{ gridTemplateColumns: "1fr 1fr" }}
-      >
-        <input name="name" placeholder="Product Name" className="input" required />
-        <input name="price" placeholder="Price (₹)" className="input" required />
-        <input
-          name="desc"
-          placeholder="Short Description"
-          className="input col-span-2"
-          required
-        />
-        <select name="category" className="input col-span-2">
-          <option value="rings">Rings</option>
-          <option value="necklaces">Necklaces</option>
-          <option value="earrings">Earrings</option>
-          <option value="bracelets">Bracelets</option>
-        </select>
-        <button type="submit" className="btn col-span-2">
-          Add Product
-        </button>
-      </form>
-      {status && <p className="mt-4 text-gray-700">{status}</p>}
+    <section className="pt-24 pb-16 bg-[#fffaf5] min-h-screen">
+      <div className="max-w-3xl mx-auto px-6">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+          Admin Panel — Add Product
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-xl shadow-md">
+          <input
+            type="text"
+            placeholder="Product Name"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            placeholder="Price (₹)"
+            value={form.price}
+            onChange={(e) => setForm({ ...form, price: e.target.value })}
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={form.image}
+            onChange={(e) => setForm({ ...form, image: e.target.value })}
+            className="w-full p-2 border rounded"
+          />
+          <textarea
+            placeholder="Description"
+            value={form.desc}
+            onChange={(e) => setForm({ ...form, desc: e.target.value })}
+            className="w-full p-2 border rounded"
+          />
+          <button type="submit" className="w-full bg-[#c67c22] text-white py-2 rounded">
+            Add Product
+          </button>
+        </form>
+
+        {list.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-4">Added Products:</h2>
+            <ul className="space-y-2">
+              {list.map((item, i) => (
+                <li key={i} className="p-3 bg-gray-100 rounded">
+                  <b>{item.name}</b> — {item.price}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </section>
   );
-        }
+            }
